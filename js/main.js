@@ -26,18 +26,36 @@ const commandMap = {
   history: "history",
   sudo: "sudo",
   clear: "clear",
-  dev: "dev",
-  twitter: "twitter",
   linkedin: "linkedin",
-  instagram: "instagram",
   github: "github",
   snake: "snake",
+  blog: "blog",
 };
 
 setTimeout(function () {
   loopLines(banner, "", 80);
   textarea.focus();
   scrollToBottom();
+  // check URL params for direct-open
+  const params = new URLSearchParams(window.location.search);
+  const openPost = params.get('open');
+  if (openPost) {
+    // wait a bit and then open blog list and the post
+    setTimeout(() => {
+      // show blog command output
+      loopLines(blog, "color2 margin", 80);
+      // simulate entering a command so it appears in history
+      commands.push(`blog ${openPost}`);
+      // open the post after the blog list is shown
+      setTimeout(() => {
+        try {
+          if (typeof showBlog === 'function') showBlog(openPost);
+        } catch (e) {
+          console.error('Failed to open blog from URL param', e);
+        }
+      }, 800);
+    }, 400);
+  }
 }, 100);
 
 window.addEventListener("keyup", function (e) {
@@ -109,7 +127,7 @@ function enterKey(e) {
 
   if (e.keyCode === 13) {
     const input = command.innerHTML.trim().toLowerCase();
-    addLine("[prithvi@archrx5500m]~$" + command.innerHTML, "no-animation", 0);
+    addLine("[sah²@ubuntu]~$" + command.innerHTML, "no-animation", 0);
 
     if (awaitingConfirmation && suggestedCommand) {
       if (input === "y") {
@@ -215,6 +233,9 @@ function commander(cmd) {
       break;
     case "snake":
       runSnakeGame();
+      break;
+    case "blog":
+      loopLines(blog, "color2 margin", 80);
       break;
     default:
       const closest = findClosestCommand(cmd);
