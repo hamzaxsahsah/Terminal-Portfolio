@@ -16,6 +16,16 @@
     padding-bottom: 160px; /* enough space so fixed button doesn't cover content */
 }
 
+/* Hide scrollbar but keep scrolling functionality */
+.blog-scroll-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.blog-scroll-container::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
 .blog-content-wrapper {
     position: relative;
     transition: none; /* no transform-based animation needed */
