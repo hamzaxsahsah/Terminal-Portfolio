@@ -9,24 +9,24 @@
 
 :root {
   /* Theme variables */
-  /* Classic Terminal Theme */
-  --color-primary: #00ff00;
-  --color-secondary: #00ff00;
-  --color-tertiary: #00ff00;
+  /* Modern Terminal Theme */
+  --color-primary: #4d8ce7;
+  --color-secondary: #4d8ce7;
+  --color-tertiary: #4d8ce7;
   --color-background: #000000;
   --color-background-overlay: rgba(0, 0, 0, 0.95);
-  --color-accent: #00ff00;
-  --color-danger: #00ff00;
-  --color-hover: #00ff00;
+  --color-accent: #4d8ce7;
+  --color-danger: #4d8ce7;
+  --color-hover: #4d8ce7;
   --color-shadow: rgba(0, 0, 0, 0.5);
-  --color-command: #00ff00;
-  --color-error: #00ff00;
-  --color-white: #00ff00;
+  --color-command: #4d8ce7;
+  --color-error: #4d8ce7;
+  --color-white: #4d8ce7;
   --color-spotify-bg: rgba(0, 0, 0, 0.95);
-  --color-spotify-border: #00ff00;
-  --color-spotify-icon: #00ff00;
-  --color-spotify-text: #00ff00;
-  --color-spotify-track-info: #00ff00;
+  --color-spotify-border: #4d8ce7;
+  --color-spotify-icon: #4d8ce7;
+  --color-spotify-text: #4d8ce7;
+  --color-spotify-track-info: #4d8ce7;
   --background-image: none;
 
   /* Typography */
@@ -62,6 +62,67 @@ body {
   text-size-adjust: auto;
   overflow: hidden;
   font-family: "FantasqueSansMono";
+  position: relative;
+}
+
+body::before {
+  content: "                                                    _______________                                 \A\
+                                                     \\            \\                                \A\
+                                                      \\            \\                               \A\
+         ______________                                \\            \\                              \A\
+        /             /\\                               \\            \\                             \A\
+       /             /  \\                              _\\           |                             \A\
+      /             /    \\                         ###==\\          /                             \A\
+     /             /     _\\                          \\==\\        /                              \A\
+    /             /  ==###==\\                         \\  \\      /                               \A\
+   /             /      |==\\ \\                        \\  \\    /                                \A\
+  /             /       |   \\ \\                        \\  \\  /                                 \A\
+ /_____________/        |    \\ \\                        \\  \\/                                  \A\
+ \\             \\       |     \\ \\                        \\  \\                                 \A\
+  \\             \\      |      \\ \\                        \\  \\                                \A\
+   \\             \\     |       \\ \\             /\\        \\  \\                               \A\
+    \\             \\    |        \\ \\           /  \\        \\  \\                              \A\
+     \\             \\   |         \\ \\         /    \\        \\  \\                             \A\
+      \\             \\  |          \\ \\       /      \\        \\  \\                            \A\
+       \\             \\ |           \\ \\     /        \\        \\  \\                           \A\
+        \\             \\|            \\ \\   /          \\        \\  \\                          \A\
+         \\             \\             \\ \\ /            \\        \\  \\                         \A\
+          \\             \\             \\ V              \\        \\  \\                         \A\
+           \\             \\             \\                \\        \\  \\                        \A\
+            \\             \\            /\\\\               \\        \\  \\                       \A\
+             \\             \\          /  \\ \\              \\        \\  \\                      \A\
+              \\             \\        /    \\  \\             \\        \\  \\                     \A\
+               \\             \\      /      \\   \\            \\        \\  \\                    \A\
+                \\             \\    /        \\    \\           \\        \\  \\                   \A\
+                 \\             \\  /          \\     \\          \\        \\  \\                  \A\
+                  \\             \\/            \\      \\         \\        \\  \\                 \A\
+                   \\                           \\       \\        \\         \\ |                  \A\
+                    \\                           \\        \\        \\        \\|                  \A\
+                     \\                           \\         \\       \\        \\                  \A\
+                      \\                           \\          \\      \\        \\                 \A\
+                       \\                           \\           \\     \\        \\                \A\
+                        \\___________________________|            \\    \\        \\                \A\
+                                                                 \\    \\        \\                \A\
+                                                                  \\    \\      /                  \A\
+                                                                   \\    \\    /                   \A\
+                                                                    \\    \\  /                    \A\
+                                                                     \\    \\/                     \A\
+                                                                      \\    \\                     \A\
+                                                                       \\    \\                    \A\
+                                                                        \\    \\                   \A\
+                                                                         \\____\\                  ";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  color: rgba(77, 140, 231, 0.1);
+  font-family: monospace;
+  white-space: pre;
+  z-index: -1;
+  pointer-events: none;
+  font-size: 8px;
+  line-height: 1;
+  animation: rotate 120s linear infinite;
 }
 
 .terminal-window {

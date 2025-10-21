@@ -252,11 +252,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 curve: 'basis'
             },
             themeVariables: {
-                primaryColor: '#00ff00',
-                primaryTextColor: '#00ff00',
-                primaryBorderColor: '#00ff00',
-                lineColor: '#00ff00',
-                secondaryColor: '#006400',
+                primaryColor: '#4d8ce7',
+                primaryTextColor: '#4d8ce7',
+                primaryBorderColor: '#4d8ce7',
+                lineColor: '#4d8ce7',
+                secondaryColor: '#2a4d80',
                 tertiaryColor: '#000000',
                 noteTextColor: '#00ff00',
                 noteBkgColor: '#000000',

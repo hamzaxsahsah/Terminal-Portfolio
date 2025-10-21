@@ -155,7 +155,7 @@
     background: var(--color-background);
     padding: 20px;
     margin: 20px 0;
-    border: 1px solid #00ff00;
+    border: 1px solid #4d8ce7;
     border-radius: 4px;
     overflow-x: auto;
 }
@@ -175,7 +175,7 @@
 /* Override Mermaid default styles */
 .mermaid .label {
     font-family: 'FantasqueSansMono', monospace !important;
-    color: #00ff00 !important;
+    color: #4d8ce7 !important;
     font-size: 14px !important;
 }
 
@@ -184,27 +184,27 @@
 .mermaid .node ellipse,
 .mermaid .node polygon {
     fill: #000000 !important;
-    stroke: #00ff00 !important;
+    stroke: #4d8ce7 !important;
     stroke-width: 2px !important;
 }
 
 .mermaid .node .label {
-    color: #00ff00 !important;
+    color: #4d8ce7 !important;
 }
 
 .mermaid .edgePath .path {
-    stroke: #00ff00 !important;
+    stroke: #4d8ce7 !important;
     stroke-width: 2px !important;
 }
 
 .mermaid .arrowheadPath {
-    fill: #00ff00 !important;
-    stroke: #00ff00 !important;
+    fill: #4d8ce7 !important;
+    stroke: #4d8ce7 !important;
 }
 
 .mermaid .edgeLabel {
     background-color: #000000 !important;
-    color: #00ff00 !important;
+    color: #4d8ce7 !important;
 }
 
 /* fixed-close-btn removed; inline back button used instead. */
