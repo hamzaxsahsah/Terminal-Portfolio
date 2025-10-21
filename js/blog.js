@@ -5,6 +5,11 @@ const blogPosts = {
         title: 'Understanding Blockchain: Centralized vs Decentralized vs Hybrid Systems',
         date: '2025-10-20',
         file: 'blog/blockchain-systems.md'
+    },
+    'trash-to-cash': {
+        title: 'From Trash to Cash: Revolutionizing Plastic Waste Management with AI and Blockchain',
+        date: '2025-10-21',
+        file: 'blog/trash-to-cash.md'
     }
 };
 
@@ -12,14 +17,30 @@ let scrollStep = 50;
 let currentScrollPosition = 0;
 let maxScroll = 0;
 
+// Add Mermaid rendering helper
+async function renderMermaidDiagrams() {
+    const mermaidElements = document.querySelectorAll('.mermaid:not([data-processed])');
+    
+    for (const element of mermaidElements) {
+        try {
+            const graphDefinition = element.textContent.trim();
+            const id = `mermaid-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+            const { svg } = await mermaid.render(id, graphDefinition);
+            element.innerHTML = svg;
+            element.setAttribute('data-processed', 'true');
+        } catch (error) {
+            console.error('Mermaid rendering error:', error);
+            element.innerHTML = `<pre style="color: #ff6b6b;">Error rendering diagram: ${error.message}</pre>`;
+        }
+    }
+}
+
 function recalcMaxScroll() {
     const wrapper = document.querySelector('.blog-content-wrapper');
     const container = document.querySelector('.blog-scroll-container');
     if (!wrapper || !container) return 0;
-    // Use scrollHeight to include full content height and clientHeight for visible area
     const full = wrapper.scrollHeight;
     const visible = container.clientHeight;
-    // native max scrollTop
     maxScroll = Math.max(0, full - visible);
     return maxScroll;
 }
@@ -66,7 +87,6 @@ function handleBlogKeyPress(e) {
         container.scrollTop = 0;
     }
 
-    // sync currentScrollPosition for indicator logic
     currentScrollPosition = container.scrollTop;
     updateScrollIndicators(wrapper);
 }
@@ -80,12 +100,19 @@ async function loadBlogPost(postId) {
 
         const response = await fetch(post.file);
         const markdown = await response.text();
-        const html = marked.parse(markdown);
         
-        // helper to produce a direct-open link + copy button
+        // Parse markdown to HTML
+        let html = marked.parse(markdown);
+        
+        // Convert Mermaid code blocks to proper div elements
+        // This handles the format: <pre><code class="language-mermaid">...</code></pre>
+        html = html.replace(
+            /<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/g,
+            '<div class="mermaid">$1</div>'
+        );
+        
         const generateLink = (id) => {
             const url = `${location.origin}${location.pathname}?open=${encodeURIComponent(id)}`;
-            // return link + copy button (button will be wired after render)
             return `<span class="blog-direct-link-wrap"><a href="${url}" class="blog-direct-link">Open this article directly</a> <button class="copy-link-btn" data-link="${url}" aria-label="Copy link">Copy</button></span>`;
         };
 
@@ -123,19 +150,21 @@ function showBlog(postId) {
         blogContainer.style.display = 'block';
         currentBlogPost = postId;
 
-        // Reset scroll position
         currentScrollPosition = 0;
         
-        // Calculate max scroll after content is rendered. Use rAF to ensure measurements are correct
-        requestAnimationFrame(() => {
+        requestAnimationFrame(async () => {
+            // Render Mermaid diagrams FIRST
+            await renderMermaidDiagrams();
+            
+            // Then calculate scroll and set up UI
             recalcMaxScroll();
             const wrapper = document.querySelector('.blog-content-wrapper');
             updateScrollIndicators(wrapper);
 
-            // Make indicators clickable
             const upIndicator = document.querySelector('.scroll-up');
             const downIndicator = document.querySelector('.scroll-down');
             const container = document.querySelector('.blog-scroll-container');
+            
             if (upIndicator) {
                 upIndicator.style.pointerEvents = 'auto';
                 upIndicator.addEventListener('click', (ev) => {
@@ -146,6 +175,7 @@ function showBlog(postId) {
                     updateScrollIndicators(wrapper);
                 });
             }
+            
             if (downIndicator) {
                 downIndicator.style.pointerEvents = 'auto';
                 downIndicator.addEventListener('click', (ev) => {
@@ -157,10 +187,8 @@ function showBlog(postId) {
                 });
             }
 
-            // Wire copy buttons (for generated direct-open link)
             const copyButtons = document.querySelectorAll('.copy-link-btn');
             copyButtons.forEach((btn) => {
-                // avoid double-binding
                 if (btn.dataset.bound === '1') return;
                 btn.dataset.bound = '1';
                 btn.addEventListener('click', async (ev) => {
@@ -188,7 +216,6 @@ function showBlog(postId) {
                 });
             });
 
-            // Add keyboard event listener
             document.addEventListener('keydown', handleBlogKeyPress);
         });
     });
@@ -203,15 +230,39 @@ function closeBlog() {
         blogContainer.style.display = 'none';
         currentBlogPost = null;
         
-        // Remove keyboard event listener
         document.removeEventListener('keydown', handleBlogKeyPress);
         
-        // Reset scroll position
         currentScrollPosition = 0;
         const container = document.querySelector('.blog-scroll-container');
         if (container) container.scrollTop = 0;
     }
 }
 
-// Make closeBlog available globally
 window.closeBlog = closeBlog;
+
+// Initialize Mermaid when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            securityLevel: 'loose',
+            flowchart: {
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                primaryColor: '#00ff00',
+                primaryTextColor: '#00ff00',
+                primaryBorderColor: '#00ff00',
+                lineColor: '#00ff00',
+                secondaryColor: '#006400',
+                tertiaryColor: '#000000',
+                noteTextColor: '#00ff00',
+                noteBkgColor: '#000000',
+                notesBorderColor: '#00ff00',
+                edgeLabelBackground: '#000000'
+            }
+        });
+    }
+});

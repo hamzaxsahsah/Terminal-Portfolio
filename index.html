@@ -30,7 +30,53 @@
     <link href="css/blog.css" rel="stylesheet" />
 
     <!-- Markdown Parser -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Mermaid Diagram Support -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+    <!-- Mermaid Diagram Support -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script>
+      async function renderMermaidDiagrams() {
+    const mermaidElements = document.querySelectorAll('.mermaid:not([data-processed])');
+    
+    for (const element of mermaidElements) {
+        try {
+            const graphDefinition = element.textContent;
+            const { svg } = await mermaid.render(`mermaid-${Date.now()}-${Math.random()}`, graphDefinition);
+            element.innerHTML = svg;
+            element.setAttribute('data-processed', 'true');
+        } catch (error) {
+            console.error('Mermaid rendering error:', error);
+            element.innerHTML = `<pre style="color: #ff6b6b;">Error rendering diagram: ${error.message}</pre>`;
+        }
+    }
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Initializing Mermaid...');
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'dark',
+                securityLevel: 'loose',
+                flowchart: {
+                    htmlLabels: true,
+                    curve: 'basis'
+                },
+                themeVariables: {
+                    primaryColor: '#00ff00',
+                    primaryTextColor: '#00ff00',
+                    primaryBorderColor: '#00ff00',
+                    lineColor: '#00ff00',
+                    secondaryColor: '#006400',
+                    tertiaryColor: '#000000',
+                    noteTextColor: '#00ff00',
+                    noteBkgColor: '#000000',
+                    notesBorderColor: '#00ff00',
+                    edgeLabelBackground: '#000000'
+                }
+            });
+        });
+    </script>
 
     <!-- FontAwesome -->
     <script
@@ -186,8 +232,9 @@
       <!-- JS Files at end for non-blocking load -->
       <script src="js/caret.js" defer></script>
       <script src="js/cursor.js" defer></script>
-      <script src="js/blog.js" defer></script>
       <script src="js/quotes.js" defer></script>
+      <!-- Load blog.js before commands.js since commands.js depends on blogPosts -->
+      <script src="js/blog.js" defer></script>
       <script src="js/commands.js" defer></script>
       <script src="js/main.js" defer></script>
     </div>

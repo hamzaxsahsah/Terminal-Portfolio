@@ -150,4 +150,61 @@
 
 .copy-link-btn:hover { background: var(--color-primary); color: var(--color-background); }
 
+/* Mermaid diagram styling */
+.mermaid-wrapper {
+    background: var(--color-background);
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.mermaid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto !important;
+}
+
+/* Override Mermaid default styles */
+.mermaid .label {
+    font-family: 'FantasqueSansMono', monospace !important;
+    color: #00ff00 !important;
+    font-size: 14px !important;
+}
+
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon {
+    fill: #000000 !important;
+    stroke: #00ff00 !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid .node .label {
+    color: #00ff00 !important;
+}
+
+.mermaid .edgePath .path {
+    stroke: #00ff00 !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid .arrowheadPath {
+    fill: #00ff00 !important;
+    stroke: #00ff00 !important;
+}
+
+.mermaid .edgeLabel {
+    background-color: #000000 !important;
+    color: #00ff00 !important;
+}
+
 /* fixed-close-btn removed; inline back button used instead. */

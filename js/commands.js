@@ -59,15 +59,43 @@ let help = [
 </pre></div><br>`,
 ];
 
-let blog = [
-  "<br>",
-  "<div class='blog-list'>",
-  "<span class='underline'>Available Blog Posts:</span>",
-  "<br><br>",
-  "1. <a href='#' onclick='showBlog(\"blockchain-systems\"); return false;'>Understanding Blockchain: Centralized vs Decentralized vs Hybrid Systems</a>",
-  "</div>",
-  "<br>",
-];
+function generateBlogList() {
+  const blogList = [
+    "<br>",
+    "<div class='blog-list'>",
+    "<span class='underline'>Available Blog Posts:</span>",
+    "<br><br>"
+  ];
+
+  let index = 1;
+  for (const [id, post] of Object.entries(blogPosts)) {
+    blogList.push(`${index}. <a href='#' onclick='showBlog("${id}"); return false;'>${post.title}</a>`);
+    blogList.push("<br>");
+    index++;
+  }
+
+  blogList.push("</div>");
+  blogList.push("<br>");
+  return blogList;
+}
+
+let blog = generateBlogList();
 let projects = [
   
 ];
+function processMarkdownWithMermaid(markdown) {
+    // Parse markdown
+    let html = marked.parse(markdown);
+    
+    // Find mermaid code blocks and wrap them properly
+    html = html.replace(/<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/g, 
+        '<div class="mermaid">$1</div>');
+    
+    // Insert into DOM
+    const outputDiv = document.createElement('div');
+    outputDiv.innerHTML = html;
+    document.getElementById('typer').appendChild(outputDiv);
+    
+    // Render all mermaid diagrams
+    renderMermaidDiagrams();
+}
