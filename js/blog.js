@@ -10,7 +10,12 @@ const blogPosts = {
         title: 'From Trash to Cash: Revolutionizing Plastic Waste Management with AI and Blockchain',
         date: '2025-10-21',
         file: 'blog/trash-to-cash.md'
+    },'Havok Physics Engine': {
+        title: 'Havok Physics Engine: Revolutionizing Game Development with Realistic Simulations',
+        date: '2025-11-07',
+        file: 'blog/havoc.md'
     }
+
 };
 
 let scrollStep = 50;
